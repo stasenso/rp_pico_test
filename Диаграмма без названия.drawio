@@ -1,0 +1,44 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="2074" dy="1203" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="btgQu8iJuiN861W0JhuT-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="btgQu8iJuiN861W0JhuT-0" target="btgQu8iJuiN861W0JhuT-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-0" value="Вход" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="354" y="40" width="66" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="btgQu8iJuiN861W0JhuT-7" target="btgQu8iJuiN861W0JhuT-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="387" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-7" value="Инициализирую экран&amp;nbsp;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="327" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-14" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="btgQu8iJuiN861W0JhuT-16" target="btgQu8iJuiN861W0JhuT-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="387" y="330" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="btgQu8iJuiN861W0JhuT-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="387" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="200" y="450" />
+              <mxPoint x="200" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-13" value="Рисуем экран с полученным номером и освобождаем его передав через&amp;nbsp;&lt;div&gt;multicore_fifo_push_blocking номер нарисованного экрана&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="232" y="410" width="310" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="btgQu8iJuiN861W0JhuT-16" value="multicore_fifo_pop_blocking()" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="280.5" y="280" width="213" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
