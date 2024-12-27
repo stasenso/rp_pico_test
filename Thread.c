@@ -64,12 +64,48 @@ void st7789_init() {
     st7789_send_command(0x11); // Exit sleep mode
     sleep_ms(150);
 
-    st7789_send_command(0x36); // Memory data access control
-    st7789_send_data(0x20); // RGB
+    st7789_send_command(0x36); // Memory data access control 215
+    st7789_send_data(0b00110000); // RGB
     //st7789_send_data(0b00101000); // BGR
 
     st7789_send_command(0x3A); // Interface pixel format
     st7789_send_data(0b01010101);    // 16-bit/pixel
+
+       /*/ Настройка гаммы
+    st7789_send_command(0x26); // Gamma set
+    st7789_send_data(0x02); // Gamma curve 1 (User-defined)
+
+    st7789_send_command(0xE0); // Positive gamma correction
+    st7789_send_data(0xD0); // V0
+    st7789_send_data(0x00); // V1
+    st7789_send_data(0x02); // V2
+    st7789_send_data(0x07); // V4
+    st7789_send_data(0x0a); // V6
+    st7789_send_data(0x29); // V13
+    st7789_send_data(0x32); // V20
+    st7789_send_data(0x44); // V36
+    st7789_send_data(0x42); // V43
+    st7789_send_data(0x06); // V50
+    st7789_send_data(0x0e); // V57
+    st7789_send_data(0x12); // V64
+    st7789_send_data(0x14); // V71
+    st7789_send_data(0x17); // V78
+
+    st7789_send_command(0xE1); // Negative gamma correction
+    st7789_send_data(0xD0); // V0
+    st7789_send_data(0x00); // V1
+    st7789_send_data(0x02); // V2
+    st7789_send_data(0x07); // V4
+    st7789_send_data(0x0a); // V6
+    st7789_send_data(0x28); // V13
+    st7789_send_data(0x31); // V20
+    st7789_send_data(0x54); // V36
+    st7789_send_data(0x47); // V43
+    st7789_send_data(0x0e); // V50
+    st7789_send_data(0x1c); // V57
+    st7789_send_data(0x17); // V64
+    st7789_send_data(0x1b); // V71
+    st7789_send_data(0x1e); // V78*/
 
     st7789_send_command(0x21); //INVON (21h): Display Inversion On
     st7789_send_command(0x29); // Display ON
