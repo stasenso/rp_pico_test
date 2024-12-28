@@ -11,21 +11,37 @@ int main() {
     uint16_t summcolor=0;
     uint32_t data;
     // Точки для кривой Безье
-    int points_x[30];
-    int points_y[30];
-    size_t num_points = 30;
+    int points_x[60];
+    int points_y[60];
+    size_t num_points = 640;
     uint16_t color = reverse(0b0000011111100000);
     stdio_init_all();
     multicore_launch_core1(coreEntry); //Запускаю в ядре 1 процесс вывода на экран
-    int x=0;
-    while (x<50)
+    float x=0.0;
+    float freq=1.0;
+    bool minmax=false;
+    while (x<500)
     {
         data = multicore_fifo_pop_blocking();
-        generate_sine_wave_points(points_x, points_y, num_points, 50, 1, x, HEIGHT / 2);
+        
         fillBufer(frame_buffer,reverse(0x4A69));//
-        draw_bezier(points_x, points_y, num_points, color);
+        generate_sine_wave_points(num_points, 50, freq, 0, HEIGHT / 2,x);
+        //draw_bezier(points_x, points_y, num_points, color);
         multicore_fifo_push_blocking(0); //Экран 0 нарисован       
-        x+=5;   
+        x+=0.03;
+        if (minmax)
+        {
+            if (freq<=0.0){
+            minmax=false;}
+            else freq-=0.005;
+        }
+        else
+        {
+            if (freq>=10.0){
+            minmax=true;}
+            else freq+=0.005;
+        }
+        //sleep_ms(20);   
     }
     
     while (1) {
@@ -50,15 +66,17 @@ unsigned short reverse(unsigned short x)
     return x;
 }
 
-void generate_sine_wave_points(int *points_x, int *points_y, size_t num_points, int amplitude, int frequency, int offset_x, int offset_y) {
+void generate_sine_wave_points(size_t num_points, int amplitude, float frequency, int offset_x, int offset_y, float phase_shift) {
     if (num_points == 0) {
         return;
     }
 
     float step = (2.0f * M_PI * frequency) / (num_points - 1);
+    float x_step = (float)WIDTH / (num_points - 1);
 
     for (size_t i = 0; i < num_points; i++) {
-        points_x[i] = offset_x + i * (WIDTH / num_points);
-        points_y[i] = offset_y + (int)(amplitude * sinf(i * step));
+        int x = offset_x + (int)(i * x_step);
+        int y = offset_y + (int)(amplitude * sinf(i * step + phase_shift)); // Добавлен сдвиг фазы
+        set_pixel(x, y, reverse(0b0000011111100000));
     }
 }
