@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 # Настройки
 font_size = 20  # Размер шрифта
-chars_per_row = 20  # Количество символов в строке
+chars_per_row = 32  # Количество символов в строке
 grid_size = font_size + 2  # Размер ячейки (с отступами)
 font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed.ttf"  # Путь к шрифту
 

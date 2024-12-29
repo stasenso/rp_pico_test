@@ -1,3 +1,6 @@
+#ifndef THREADS_H
+#define THREADS_H
+
 #include <stdio.h>
 #define SPI_PORT spi0
 #define PIN_MISO -1
@@ -21,3 +24,5 @@ void st7789_send_data(uint8_t data);
 void st7789_send_framebuffer(uint16_t *buffer);
 void coreEntry();
 void st7789_init();
+
+#endif

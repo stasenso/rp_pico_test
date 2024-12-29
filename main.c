@@ -3,6 +3,7 @@
 #include "pico/multicore.h"
 #include "pico/stdlib.h"
 #include "DrawBezier.h"
+#include "font_data.h"
 
 int main() {
     uint16_t red = 0;
@@ -13,7 +14,7 @@ int main() {
     // Точки для кривой Безье
     int points_x[60];
     int points_y[60];
-    size_t num_points = 640;
+    size_t num_points = 1600;
     uint16_t color = reverse(0b0000011111100000);
     stdio_init_all();
     multicore_launch_core1(coreEntry); //Запускаю в ядре 1 процесс вывода на экран
@@ -26,7 +27,7 @@ int main() {
         
         fillBufer(frame_buffer,reverse(0x4A69));//
         generate_sine_wave_points(num_points, 50, freq, 0, HEIGHT / 2,x);
-        //draw_bezier(points_x, points_y, num_points, color);
+        draw_string(10,100,"Proverka latinnicy");
         multicore_fifo_push_blocking(0); //Экран 0 нарисован       
         x+=0.03;
         if (minmax)
