@@ -1,7 +1,6 @@
 from PIL import Image
-import sys
 
-def convert_bmp_to_font(bmp_path, img_width, img_height, char_width, char_height, output_c_path, header_path):
+def convert_bmp_to_linear_image(bmp_path, img_width, img_height, char_width, char_height, output_c_path, header_path):
     # Открываем BMP файл и конвертируем его в монохромное изображение
     image = Image.open(bmp_path).convert("1")
     width, height = image.size
@@ -16,44 +15,42 @@ def convert_bmp_to_font(bmp_path, img_width, img_height, char_width, char_height
         raise ValueError("Ширина и высота символов должны быть кратны ширине и высоте изображения.")
 
     chars_per_row = img_width // char_width
-    chars_per_col = img_height // char_height
-    total_chars = chars_per_row * chars_per_col
+    total_chars = (img_width // char_width) * (img_height // char_height)
+    linear_width = chars_per_row * char_width
 
     # Генерация .C файла
     with open(output_c_path, "w") as f:
-        f.write(f"// Шрифт, сгенерированный из {bmp_path}\n")
+        f.write(f"// Изображение, сгенерированное из {bmp_path}\n")
         f.write("#include <stdint.h>\n\n")
-        f.write(f"const uint8_t font_width = {char_width};\n")
-        f.write(f"const uint8_t font_height = {char_height};\n")
-        f.write(f"const uint16_t font_char_count = {total_chars};\n")
-        f.write("const uint8_t font_data[] = {\n")
+        f.write(f"const uint16_t image_linear_width = {linear_width};\n")
+        f.write(f"const uint8_t char_width = {char_width};\n")
+        f.write(f"const uint8_t char_height = {char_height};\n")
+        f.write(f"const uint16_t total_chars = {total_chars};\n")
+        f.write("const uint8_t image_data[] = {\n")
 
-        for char_y in range(chars_per_col):
-            for char_x in range(chars_per_row):
-                f.write(f"    // Символ ({char_x}, {char_y})\n")
-                for y in range(char_height):
+        for y in range(img_height):
+            for x in range(img_width):
+                if x % 8 == 0:
                     byte = 0
-                    for x in range(char_width):
-                        pixel_x = char_x * char_width + x
-                        pixel_y = char_y * char_height + y
-                        if pixels[pixel_x, pixel_y] == 0:  # Черный пиксель
-                            byte |= (1 << (7 - (x % 8)))
-                        if (x + 1) % 8 == 0 or x == char_width - 1:
-                            f.write(f"0x{byte:02X}, ")
-                            byte = 0
-                    f.write("\n")
+                if pixels[x, y] == 0:  # Черный пиксель
+                    byte |= (1 << (7 - (x % 8)))
+                if x % 8 == 7 or x == img_width - 1:
+                    f.write(f"0x{byte:02X}, ")
+            f.write("\n")
+
         f.write("};\n")
 
     # Генерация заголовочного файла
     with open(header_path, "w") as f:
-        f.write("#ifndef FONT_DATA_H\n")
-        f.write("#define FONT_DATA_H\n\n")
+        f.write("#ifndef IMAGE_DATA_H\n")
+        f.write("#define IMAGE_DATA_H\n\n")
         f.write("#include <stdint.h>\n\n")
-        f.write("extern const uint8_t font_width;\n")
-        f.write("extern const uint8_t font_height;\n")
-        f.write("extern const uint16_t font_char_count;\n")
-        f.write("extern const uint8_t font_data[];\n\n")
-        f.write("#endif // FONT_DATA_H\n")
+        f.write("extern const uint16_t image_linear_width;\n")
+        f.write("extern const uint8_t char_width;\n")
+        f.write("extern const uint8_t char_height;\n")
+        f.write("extern const uint16_t total_chars;\n")
+        f.write("extern const uint8_t image_data[];\n\n")
+        f.write("#endif // IMAGE_DATA_H\n")
 
     print(f"Файл .C сохранён: {output_c_path}")
     print(f"Файл заголовка сохранён: {header_path}")
@@ -67,4 +64,4 @@ char_height = 22  # Укажите высоту символа
 output_c_path = "font_data_dirt.c"
 header_path = "font_data_dirt.h"
 
-convert_bmp_to_font(bmp_path, img_width, img_height, char_width, char_height, output_c_path, header_path)
+convert_bmp_to_linear_image (bmp_path, img_width, img_height, char_width, char_height, output_c_path, header_path)
