@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-add_executable(${PROJECT_NAME} main.c Thread.c DrawBezier.c font_data.c)
+add_executable(${PROJECT_NAME} main.c Thread.c DrawBezier.c font_data.c Reverse.c SineWave.c SetPixel.c)
 
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib

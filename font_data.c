@@ -1,8 +1,8 @@
 // Шрифт, сгенерированный из /home/smikhai/Repo/rp_pico_test/Font/font_grid_with_cyrillic.bmp
 #include "font_data.h"
 #include "Thread.h"
-#include "DrawBezier.h"
-
+#include "SetPixel.h"
+#include <stdbool.h>
 
 const uint16_t image_linear_width = 704;
 const uint8_t char_width = 22;
