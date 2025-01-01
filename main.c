@@ -27,7 +27,8 @@ int main() {
         
         fillBufer(frame_buffer,reverse(0x4A69));//
         generate_sine_wave_points(num_points, 50, freq, 0, HEIGHT / 2,x);
-        draw_string(0,50,L"Проверка кириллицы");
+        draw_string(20,110,L"Кириллица работает!!!"); //
+        draw_string(50,130,L"Does Latin work?"); //Does Latin work?
         multicore_fifo_push_blocking(0); //Экран 0 нарисован       
         x+=0.03;
         if (minmax)
