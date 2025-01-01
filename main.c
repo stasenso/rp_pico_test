@@ -27,7 +27,7 @@ int main() {
         
         fillBufer(frame_buffer,reverse(0x4A69));//
         generate_sine_wave_points(num_points, 50, freq, 0, HEIGHT / 2,x);
-        draw_string(0,50,"Proverka latinnicy");
+        draw_string(0,50,L"Проверка кириллицы");
         multicore_fifo_push_blocking(0); //Экран 0 нарисован       
         x+=0.03;
         if (minmax)
@@ -43,8 +43,8 @@ int main() {
             else freq+=0.005;
         }
 
-        set_pixel(0,0,reverse(0b1111100000000000));
         
+
         //sleep_ms(20);   
     }
     
