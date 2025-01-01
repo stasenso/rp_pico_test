@@ -7,7 +7,7 @@ extern const uint16_t font_width;
 extern const uint16_t font_height;
 extern const uint8_t font_data[];
 
-void draw_string(uint16_t x, uint16_t y, const wchar_t *str);
-void draw_char(uint16_t x, uint16_t y,uint8_t wdh, wchar_t c);
+void draw_string(uint16_t x, uint16_t y, const wchar_t *str, uint16_t Color);
+void draw_char(uint16_t x, uint16_t y,uint8_t wdh, wchar_t c, uint16_t color);
 uint8_t get_char_width(wchar_t c);
 #endif // FONT_DATA_H
