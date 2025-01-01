@@ -65,7 +65,7 @@ void st7789_init() {
     sleep_ms(150);
 
     st7789_send_command(0x36); // Memory data access control 215
-    st7789_send_data(0b00110000); // RGB
+    st7789_send_data(0b10100000); // RGB
     //st7789_send_data(0b00101000); // BGR
 
     st7789_send_command(0x3A); // Interface pixel format

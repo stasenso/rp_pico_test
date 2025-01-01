@@ -2,7 +2,7 @@ from PIL import Image
 
 def convert_bmp_to_linear_image(bmp_path, img_width, img_height, char_width, char_height, output_c_path, header_path):
     # Открываем BMP файл и конвертируем его в монохромное изображение
-    image = Image.open(bmp_path).convert("1")
+    image = Image.open(bmp_path)
     width, height = image.size
 
     if width != img_width or height != img_height:
@@ -57,8 +57,8 @@ def convert_bmp_to_linear_image(bmp_path, img_width, img_height, char_width, cha
 
 # Пример вызова функции
 bmp_path = "Font/font_grid_with_cyrillic.bmp"  # Замените на ваш путь
-img_width = 704  # Укажите ширину изображения
-img_height = 242  # Укажите высоту изображения
+img_width = 7744  # Укажите ширину изображения
+img_height = 22  # Укажите высоту изображения
 char_width = 22  # Укажите ширину символа
 char_height = 22  # Укажите высоту символа
 output_c_path = "font_data_dirt.c"

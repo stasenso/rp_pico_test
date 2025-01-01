@@ -42,6 +42,9 @@ int main() {
             minmax=true;}
             else freq+=0.005;
         }
+
+        set_pixel(0,0,reverse(0b1111100000000000));
+        
         //sleep_ms(20);   
     }
     
