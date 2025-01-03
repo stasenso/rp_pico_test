@@ -2,8 +2,8 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include "pico/multicore.h"
+#include "BackBuffer.h"
 
-uint16_t frame_buffer[WIDTH * HEIGHT]; // Буфер для экрана
 
 //uint16_t frame_buffer1[WIDTH * HEIGHT]; // Буфер для экрана1
 

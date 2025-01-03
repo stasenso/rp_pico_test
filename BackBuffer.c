@@ -1,5 +1,36 @@
-#include "DrawBezier.h"
-#include "SetPixel.h"
+#include "BackBuffer.h"
+#include <math.h>
+
+uint16_t frame_buffer[WIDTH * HEIGHT]; // Буфер для экрана
+// Установка пикселя в буфере (с проверкой границ)
+
+unsigned short reverse(unsigned short x)
+{
+    x = (x & 0xFF) << 8 | (x & 0xFF00) >>  8;
+    return x;
+}
+
+void set_pixel(uint16_t x, uint16_t y, uint16_t color) {
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
+        frame_buffer[y * WIDTH + x] = color;
+    }
+}
+
+void generate_sine_wave_points(uint16_t num_points, int amplitude, float frequency, int offset_x, int offset_y, float phase_shift) {
+    if (num_points == 0) {
+        return;
+    }
+
+    float step = (2.0f * M_PI * frequency) / (num_points - 1);
+    float x_step = (float)WIDTH / (num_points - 1);
+
+    for (size_t i = 0; i < num_points; i++) {
+        int x = offset_x + (int)(i * x_step);
+        int y = offset_y + (int)(amplitude * sinf(i * step + phase_shift)); // Добавлен сдвиг фазы
+        set_pixel(x, y, reverse(0b0000011111100000));
+    }
+}
+
 // Функция для вычисления базисного полинома Бернштейна
 float bernstein(int i, int n, float t) {
     // Вычисление биномиального коэффициента C(n, i)

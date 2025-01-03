@@ -11,13 +11,8 @@
 #define PIN_RST  13
 #define PIN_BL   12
 
-#define WIDTH  320
-#define HEIGHT 240
-#define COLOR_BLACK 0x0000
-#define COLOR_WHITE 0xFFFF
 
-extern uint16_t frame_buffer[WIDTH * HEIGHT];
-extern uint16_t frame_buffer1[WIDTH * HEIGHT];
+
 
 void st7789_send_command(uint8_t cmd);
 void st7789_send_data(uint8_t data);
