@@ -16,5 +16,5 @@ void draw_bezier(const int *points_x, const int *points_y, size_t num_points, ui
 unsigned short reverse(unsigned short x);
 void set_pixel(uint16_t x, uint16_t y, uint16_t color);
 void generate_sine_wave_points(uint16_t num_points, int amplitude, float frequency, int offset_x, int offset_y, float phase_shift);
-
+void grid (uint16_t x, uint16_t y, uint16_t step, uint16_t color);
 #endif // __BACKBUFFER_H__

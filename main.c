@@ -26,6 +26,7 @@ int main() {
         data = multicore_fifo_pop_blocking();
         
         fillBufer(frame_buffer,reverse(0x4A69));//
+        grid(20,20,40,0x634d);
         generate_sine_wave_points(num_points, 50, freq, 0, HEIGHT / 2,x);
         draw_string(20,110,L"Кириллица работает!!!",0b1111111111111111); //
         draw_string(50,130,L"Does Latin work?",0b0000000000011111); //Does Latin work?
@@ -36,13 +37,13 @@ int main() {
         {
             if (freq<=0.0){
             minmax=false;}
-            else freq-=0.005;
+            else freq-=0.05;
         }
         else
         {
             if (freq>=10.0){
             minmax=true;}
-            else freq+=0.005;
+            else freq+=0.05;
         }
 
         

@@ -65,3 +65,21 @@ void draw_bezier(const int *points_x, const int *points_y, size_t num_points, ui
         set_pixel((int)(x + 0.5f), (int)(y + 0.5f), color);
     }
 }
+
+void grid (uint16_t x, uint16_t y, uint16_t step, uint16_t color){
+    for (uint16_t vgrid = x; vgrid < WIDTH; vgrid+=step)
+    {
+        for (uint16_t hgrid = 0;  hgrid< HEIGHT; hgrid++)
+        {
+            set_pixel(vgrid,hgrid,reverse(color));
+        }
+    }
+
+    for (uint16_t hgrid = y;  hgrid< HEIGHT; hgrid+=step)
+    {
+        for (uint16_t vgrid = 0; vgrid < WIDTH; vgrid++)
+        {
+            set_pixel(vgrid,hgrid,reverse(color));
+        }  
+    }
+}
