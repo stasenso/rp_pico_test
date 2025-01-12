@@ -10,6 +10,7 @@
 #define COLOR_WHITE 0xFFFF
 
 extern uint16_t frame_buffer[WIDTH * HEIGHT];
+extern float humidity, temperature;
 
 float bernstein(int i, int n, float t);
 void draw_bezier(const int *points_x, const int *points_y, size_t num_points, uint16_t color);

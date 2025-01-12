@@ -4,12 +4,20 @@
 #include "pico/multicore.h"
 #include "BackBuffer.h"
 
-
+struct repeating_timer timer;
 //uint16_t frame_buffer1[WIDTH * HEIGHT]; // Буфер для экрана1
 
 void coreEntry(){
     st7789_init(); // Initialize SPI and GPIO
     gpio_put(PIN_BL, 1); // Подсветка
+    
+    gpio_pull_up(DHT_PIN);
+    
+    if (!add_repeating_timer_ms(2000, repeating_timer_callback, NULL, &timer)) {
+    printf("Failed to add timer\n");
+    while (true); // Остановите выполнение, если ошибка
+}
+
     multicore_fifo_push_blocking(0); //Экран 0 свободен
     //multicore_fifo_push_blocking(1); //Экран 1 свободен
 
@@ -150,4 +158,76 @@ void st7789_send_framebuffer(uint16_t *buffer) {
     spi_write_blocking(SPI_PORT, (uint8_t *)buffer, WIDTH * HEIGHT * 2);
 
     gpio_put(PIN_CS, 1); // Завершить передачу
+}
+
+void send_start_signal() {
+    gpio_init(DHT_PIN);
+    gpio_set_dir(DHT_PIN, GPIO_OUT);
+    
+    // Низкий уровень на 1 мс
+    gpio_put(DHT_PIN, 0);
+    sleep_ms(1);
+    
+    // Высокий уровень на 20-40 мкс
+    gpio_put(DHT_PIN, 1);
+    sleep_us(40);
+}
+
+bool wait_for_signal(uint32_t timeout_us, bool level) {
+    uint32_t start_time = time_us_32();
+    while (gpio_get(DHT_PIN) != level) {
+        if (time_us_32() - start_time > timeout_us) {
+            return false; // Таймаут
+        }
+    }
+    return true;
+}
+
+void read_dht_data(uint8_t *data) {
+    for (int i = 0; i < 40; i++) {
+        // Ожидаем начала высокого уровня
+        if (!wait_for_signal(80, 1)) return;
+
+        // Замер длительности высокого уровня
+        uint32_t start_time = time_us_32();
+        if (!wait_for_signal(100, 0)) return;
+        uint32_t pulse_length = time_us_32() - start_time;
+
+        // Сохраняем бит (1, если > 50 мкс)
+        data[i / 8] <<= 1;
+        if (pulse_length > 50) {
+            data[i / 8] |= 1;
+        }
+    }
+}
+
+bool dht_read(float *humidity, float *temperature) {
+    uint8_t data[5] = {0};
+
+    send_start_signal();
+    gpio_set_dir(DHT_PIN, GPIO_IN);
+
+    // Ожидаем ответа от датчика
+    if (!wait_for_signal(100, 0)) return false; // Ждём низкого уровня
+    if (!wait_for_signal(100, 1)) return false; // Ждём высокого уровня
+
+    // Читаем данные
+    read_dht_data(data);
+
+    // Проверяем контрольную сумму
+    if (data[4] != (data[0] + data[1] + data[2] + data[3])) return false;
+
+    // Расчёт значений
+    *humidity = ((data[0] << 8) | data[1]) / 10.0;
+    *temperature = ((data[2] << 8) | data[3]) / 10.0;
+
+    return true;
+}
+
+bool repeating_timer_callback(struct repeating_timer *t) {
+    if (dht_read(&humidity, &temperature)) {
+    } else {
+        humidity=-0.0;
+        temperature=-0.0;
+    }
 }

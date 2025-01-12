@@ -2,6 +2,8 @@
 #include <math.h>
 
 uint16_t frame_buffer[WIDTH * HEIGHT]; // Буфер для экрана
+float humidity, temperature;
+
 // Установка пикселя в буфере (с проверкой границ)
 
 unsigned short reverse(unsigned short x)
