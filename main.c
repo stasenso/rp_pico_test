@@ -17,6 +17,14 @@ int main() {
     size_t num_points = 1600;
     uint16_t color = reverse(0b0000011111100000);
     stdio_init_all();
+    
+    // Настройка GPIO25 как выход
+    gpio_init(25);
+    gpio_set_dir(25, GPIO_OUT);
+
+    // Включение светодиода
+    gpio_put(25, 1);
+
     multicore_launch_core1(coreEntry); //Запускаю в ядре 1 процесс вывода на экран
     float x=0.0;
     float freq=1.0;
